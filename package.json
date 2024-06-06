@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.3",
+    "jsdom": "^24.1.0",
     "playwright": "^1.44.1"
   }
 }

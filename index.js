@@ -1,8 +1,10 @@
 import express from 'express'
 import playwright from 'playwright'
+import jsdom from 'jsdom'
 
 const app = express()
 const targetPage = 'https://www.fatsecret.com.tr/kaloriler-beslenme/genel/elma?portionid=58449&portionamount=100,000'
+const { JSDOM } = jsdom
 
 async function test() {
   const browser = await playwright.chromium.launch({ headless: true })
@@ -10,7 +12,11 @@ async function test() {
 
   await page.goto(targetPage)
 
-  let html = await page.content()
+  const html = await page.content()
+  const dom = new JSDOM(html)
+  const servingValue = dom.window.document.querySelector('.serving_size_value').textContent
+
+  console.log('Serving value: ', servingValue)
 }
 
 app.get('/', (req, res) => {
