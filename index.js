@@ -1,6 +1,17 @@
 import express from 'express'
+import playwright from 'playwright'
 
 const app = express()
+const targetPage = 'https://www.fatsecret.com.tr/kaloriler-beslenme/genel/elma?portionid=58449&portionamount=100,000'
+
+async function test() {
+  const browser = await playwright.chromium.launch({ headless: true })
+  const page = await browser.newPage()
+
+  await page.goto(targetPage)
+
+  let html = await page.content()
+}
 
 app.get('/', (req, res) => {
   res.send(`
@@ -35,6 +46,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/detail', (req, res) => {
+  test()
   res.status(200).json({
     result: 'detail page dom'
   })
