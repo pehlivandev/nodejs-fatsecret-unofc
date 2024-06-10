@@ -1,4 +1,40 @@
 export default function() {
+  function getFoods() {
+    return `
+      fetch('/list', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ search: event.target.value })
+      }).then(
+        response => {
+          console.log('RESPONSE: ', response)
+          return response
+        },
+        error => {
+          console.log('ERROR: ', error)
+          return error
+        }
+      )
+    `
+  }
+
+  function getFoodDetail() {
+    return `
+      fetch('/detail', { method: 'POST' }).then(
+        response => {
+          console.log('RESPONSE: ', response)
+          return response
+        },
+        error => {
+          console.log('ERROR: ', error)
+          return error
+        }
+      )
+    `
+  }
+
   return `
     <!DOCTYPE html>
     <html lang="tr">
@@ -12,23 +48,24 @@ export default function() {
       <body>
         Hello world! <br />
         <div class="search">
-          <input type="search" placeholder="Type a food name">
+          <input type="search" placeholder="Type a food name" oninput="processChanges(event)">
         </div>
         <button id="sendButton">Gönder</button>
         <script type="text/javascript">
           const button = document.getElementById('sendButton')
           button.addEventListener('click', function() {
-            fetch('/detail', { method: 'POST' }).then(
-              response => {
-                console.log('RESPONSE: ', response)
-                return response
-              },
-              error => {
-                console.log('ERROR: ', error)
-                return error
-              }
-            )
+            ${getFoodDetail()}
           })
+
+          function debounce(func, timeout = 300) {
+            let timer;
+            return (...args) => {
+              clearTimeout(timer);
+              timer = setTimeout(() => { func.apply(this, args) }, timeout)
+            }
+          }
+
+          const processChanges = debounce((event) => ${getFoods()}, 1000);
         </script>
       </body>
     </html>

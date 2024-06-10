@@ -6,6 +6,7 @@ import home from './public/pages/home.js'
 
 const app = express()
 
+app.use(express.json())
 app.use(express.static('public'))
 
 const targetPage = 'https://www.fatsecret.com.tr/kaloriler-beslenme/genel/elma?portionid=58449&portionamount=100,000'
@@ -77,6 +78,11 @@ app.post('/detail', (req, res) => {
       })
     }
   )
+})
+
+app.post('/list', (req, res) => {
+  console.log('LIST: ', req.body)
+  return req.body
 })
 
 app.listen(3000)
