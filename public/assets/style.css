@@ -11,6 +11,7 @@ button {
   background-color: #0daf71;
   color: #fff;
   font-size: 15px;
+  cursor: pointer;
 }
 
 input,
@@ -23,6 +24,7 @@ body {
   font-optical-sizing: auto;
 }
 
-.search input {
+.search input,
+.search button {
   margin-bottom: 10px;
 }

@@ -1,4 +1,5 @@
 export default function() {
+  let foodList = []
   function getFoods() {
     return `
       fetch('/list', {
@@ -7,16 +8,15 @@ export default function() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ search: event.target.value })
-      }).then(
-        response => {
-          console.log('RESPONSE: ', response)
-          return response
-        },
-        error => {
-          console.log('ERROR: ', error)
-          return error
-        }
-      )
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Resp: ', data.result)
+        foodList = data.result
+      })
+      .catch(error => {
+        console.log('ERROR: ', error)
+      })
     `
   }
 
@@ -49,8 +49,9 @@ export default function() {
         Hello world! <br />
         <div class="search">
           <input type="search" placeholder="Type a food name" oninput="processChanges(event)">
+          <button id="sendButton">Gönder</button>
         </div>
-        <button id="sendButton">Gönder</button>
+        <div class="search-result">Search result: <pre>${foodList}</pre></div>
         <script type="text/javascript">
           const button = document.getElementById('sendButton')
           button.addEventListener('click', function() {
