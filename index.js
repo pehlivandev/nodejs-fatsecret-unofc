@@ -93,15 +93,15 @@ app.get('/', (req, res) => {
   res.send(home())
 })
 
-app.post('/detail', (req, res) => {
-  const url = 'https://www.fatsecret.com.tr/kaloriler-beslenme/genel/elma?portionid=58449&portionamount=100,000'
-  
-  handleDetailHtml(url).then(
+app.post('/list', async (req, res) => {
+  const page = 0
+  const searchUrl = 'https://www.fatsecret.com.tr/kaloriler-beslenme/search'
+  const url = `${searchUrl}?${generateParams({ q: req.body.search, pg: page })}`
+
+  handleListHtml(url).then(
     response => {
       res.status(200).json({
-        result: {
-          ...response
-        }
+        result: response
       })
     },
     error => {
@@ -112,15 +112,15 @@ app.post('/detail', (req, res) => {
   )
 })
 
-app.post('/list', async (req, res) => {
-  const page = 0
-  const searchUrl = 'https://www.fatsecret.com.tr/kaloriler-beslenme/search'
-  const url = `${searchUrl}?${generateParams({ q: req.body.search, pg: page })}`
-
-  handleListHtml(url).then(
+app.post('/detail', (req, res) => {
+  const url = 'https://www.fatsecret.com.tr/kaloriler-beslenme/genel/elma?portionid=58449&portionamount=100,000'
+  
+  handleDetailHtml(url).then(
     response => {
       res.status(200).json({
-        result: response
+        result: {
+          ...response
+        }
       })
     },
     error => {
