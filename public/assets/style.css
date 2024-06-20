@@ -4,6 +4,11 @@ input {
   padding: 8px 12px;
 }
 
+input:active,
+input:focus {
+  border-color: #0daf71;
+}
+
 button {
   width: 100%;
   border: none;
@@ -12,6 +17,10 @@ button {
   color: #fff;
   font-size: 15px;
   cursor: pointer;
+}
+
+button:hover {
+  background-color: #05c57c;
 }
 
 input,

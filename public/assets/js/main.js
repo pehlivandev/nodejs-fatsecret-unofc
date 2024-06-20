@@ -1,6 +1,7 @@
 let foodList = []
 const button = document.getElementById('sendButton')
 const search = document.getElementById('search')
+const resultArea = document.querySelector('.search-result')
 
 function getFoods(event) {
   console.log('ARG: ', event)
@@ -16,7 +17,7 @@ function getFoods(event) {
   .then(data => {
     console.log('Resp: ', data.result)
     foodList = data.result
-    const resultArea = document.querySelector('.search-result')
+
     resultArea.innerHTML = ''
 
     foodList.forEach(food => {
@@ -40,16 +41,30 @@ function getFoods(event) {
 function getFoodDetail(link) {
   console.log('LINK: ', link)
 
-  fetch('/detail', { method: 'POST' }).then(
-    response => {
-      console.log('RESPONSE: ', response)
-      return response
+  fetch('/detail', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
     },
-    error => {
-      console.log('ERROR: ', error)
-      return error
-    }
-  )
+    body: JSON.stringify({ link })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('DETAIL RESPONSE: ', data)
+
+    resultArea.innerHTML = ''
+
+    const detailHtml = `
+      <div>deneme 1, 2</div>
+    `
+
+    resultArea.innerHTML = detailHtml
+
+    return data
+  })
+  .catch(error => {
+    console.log('ERROR: ', error)
+  })
 }
 
 function debounce(func, timeout = 300) {

@@ -28,6 +28,9 @@ async function generateDom(url) {
   await contentOfPage.goto(url)
 
   const html = await contentOfPage.content()
+
+  await browser.close()
+
   const dom = new JSDOM(html)
   const doc = dom.window.document
 
@@ -81,8 +84,6 @@ async function handleDetailHtml(url) {
     }
   })
 
-  await browser.close()
-
   return {
     servingValue,
     nutritionValues
@@ -113,8 +114,8 @@ app.post('/list', async (req, res) => {
 })
 
 app.post('/detail', (req, res) => {
-  const url = 'https://www.fatsecret.com.tr/kaloriler-beslenme/genel/elma?portionid=58449&portionamount=100,000'
-  
+  const url = `https://www.fatsecret.com.tr${req.body.link}`
+
   handleDetailHtml(url).then(
     response => {
       res.status(200).json({
