@@ -37,3 +37,11 @@ body {
 .search button {
   margin-bottom: 10px;
 }
+
+.food-detail > div:first-child {
+  margin-bottom: 10px;
+}
+
+.food-detail > div:first-child > div {
+  font-size: 20px;
+}

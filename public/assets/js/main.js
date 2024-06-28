@@ -39,7 +39,7 @@ function getFoods(event) {
 }
 
 function getFoodDetail(link) {
-  console.log('LINK: ', link)
+  // console.log('LINK: ', link)
 
   fetch('/detail', {
     method: 'POST',
@@ -50,12 +50,24 @@ function getFoodDetail(link) {
   })
   .then(response => response.json())
   .then(data => {
-    console.log('DETAIL RESPONSE: ', data)
+    // console.log('DETAIL RESPONSE: ', data)
+    const { nutritionValues, servingValue, title } = data.result
 
     resultArea.innerHTML = ''
 
     const detailHtml = `
-      <div>deneme 1, 2</div>
+      <div class="food-detail">
+        <div>
+          <div>${title}</div>
+          <b>${servingValue}</b> için
+        </div>
+        <div>
+          <div>Kalori: ${nutritionValues.calorie}</div>
+          <div>Karbonhidrat: ${nutritionValues.carbohydrate}</div>
+          <div>Yağ: ${nutritionValues.fat}</div>
+          <div>Protein: ${nutritionValues.protein}</div>
+        </div>
+      </div>
     `
 
     resultArea.innerHTML = detailHtml

@@ -63,6 +63,7 @@ async function handleDetailHtml(url) {
     carbohydrate: '',
     protein: '',
   }
+  const title = doc.title
 
   nutritionItems.forEach((elem) => {
     const title = elem.querySelector('.factTitle').textContent
@@ -86,7 +87,8 @@ async function handleDetailHtml(url) {
 
   return {
     servingValue,
-    nutritionValues
+    nutritionValues,
+    title
   }
 }
 
